@@ -2,6 +2,8 @@ package com.aula.faculdade.controllers;
 
 import com.aula.faculdade.entities.Cliente;
 import com.aula.faculdade.services.ClienteService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,9 @@ public class ClienteController {
         Cliente clienteAtualizado = clienteService.alterarCliente(id, cliente);
         return ResponseEntity.ok(clienteAtualizado);
     }
-
+    @ApiResponses({
+            @ApiResponse(responseCode = "204", description = "Usuário excluído com sucesso"),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
         clienteService.deletarCliente(id);
