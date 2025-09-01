@@ -27,6 +27,6 @@ public class Cliente {
     @Column(nullable = false, length = 40)
     private String cidade;
 
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String telefone;
 }
