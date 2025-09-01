@@ -1,6 +1,8 @@
 package com.aula.faculdade.services;
 
 import com.aula.faculdade.entities.Cliente;
+import com.aula.faculdade.exceptions.ClienteInvalidoException;
+import com.aula.faculdade.exceptions.ClienteNaoEncontradoException;
 import com.aula.faculdade.repo.ClienteRepos;
 import com.aula.faculdade.specification.ClienteSpecification;
 import org.springframework.http.HttpStatus;
@@ -21,9 +23,8 @@ public class ClienteService {
 
     public Cliente listarCliente(Long id) {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Cliente com ID " + id + " não encontrado"
-                ));
+                .orElseThrow(() -> new ClienteNaoEncontradoException(id)
+                );
     }
 
     public Cliente salvarCliente(Cliente cliente) {
@@ -36,7 +37,7 @@ public class ClienteService {
     @Transactional
     public void deletarCliente(Long id) {
         if (!clienteRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente com ID " + id + " não encontrado");
+            throw new ClienteNaoEncontradoException(id);
         }
         clienteRepository.deleteById(id);
     }
@@ -44,13 +45,12 @@ public class ClienteService {
     @Transactional
     public Cliente alterarCliente(Long id, Cliente entity) {
         if (entity == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados do cliente não podem ser nulos");
+            throw new ClienteInvalidoException("Dados não podem ser nulos");
         }
 
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Cliente com ID " + id + " não encontrado"
-                ));
+                .orElseThrow(() -> new ClienteNaoEncontradoException(id)
+                );
 
         cliente.setNome(entity.getNome());
         cliente.setEndereco(entity.getEndereco());
