@@ -53,5 +53,4 @@ public class ClienteController {
         List<Cliente> clientes = clienteService.buscarClientes(nome, endereco, cidade, telefone);
         return ResponseEntity.ok(clientes);
     }
-
 }
