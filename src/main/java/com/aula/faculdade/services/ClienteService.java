@@ -45,6 +45,8 @@ public class ClienteService {
 
         cliente.setNome(entity.getNome());
         cliente.setEndereco(entity.getEndereco());
+        cliente.setCidade(entity.getCidade());
+        cliente.setTelefone(entity.getTelefone());
         return clienteRepository.save(cliente);
     }
     public List<Cliente> buscarClientes(String nome, String endereco, String cidade, String telefone) {
