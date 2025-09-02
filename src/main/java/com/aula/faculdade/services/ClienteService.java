@@ -5,9 +5,7 @@ import com.aula.faculdade.exceptions.ClienteInvalidoException;
 import com.aula.faculdade.exceptions.ClienteNaoEncontradoException;
 import com.aula.faculdade.repo.ClienteRepos;
 import com.aula.faculdade.specification.ClienteSpecification;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -29,7 +27,7 @@ public class ClienteService {
 
     public Cliente salvarCliente(Cliente cliente) {
         if (cliente == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cliente não pode ser nulo");
+            throw new ClienteInvalidoException("Cliente não pode ser nulo");
         }
         return clienteRepository.save(cliente);
     }
